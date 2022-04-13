@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/main.css">
+    <title>Crud Livraria</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <table id="tableDataBook">
+            <tr class="header">
+                <th>Title</th>
+                <th>Author</th>
+                <th>Publishing</th>
+                <th>Number Pages</th>
+                <th>Action</th>
+            </tr>
+        </table>
+        <p id="textEmptyBook">No book registered</p>
+        <div id="containerNewBook">
+            <button onclick="openBook()" id="buttonNewBook">Add new book</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <table id="tableDataAuthor">
+            <tr class="header">
+                <th>Name</th>
+                <th>Nationality</th>
+                <th>Action</th>
+            </tr>
+        </table>
+        <p id="textEmptyAuthor">No author registered</p>
+        <div id="containerNewAuthor">
+            <button onclick="openAuthor()" id="buttonNewAuthor">Add new Author</button>
+        </div>
+    </div>
+
+    <script src="./js/scriptBook.js"></script>
+    <script src="./js/scriptAuthor.js"></script>
+</body>
+
+</html>

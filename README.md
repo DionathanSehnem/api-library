@@ -196,7 +196,7 @@ Rota responsável por atualizar os dados de uma livro específico na tabela `boo
 ```
 Exemplo de retorno com sucesso:
 ```json
-  { message: 'Book updated successful' }
+  { "message": "Book updated successful" }
 ```
 Quando o `id` do livro não é encontrado:
 ```json
@@ -260,7 +260,7 @@ Exemplo de retorno com sucesso:
 - Atributos `name` e `nationality` não podem estar vazios;
 ---
 
-###  GET `/books/search`
+###  GET `/authors/search`
 Rota responsável por listar um autor especificado pelo `name` passado na rota.
 
 Exemplo de rota

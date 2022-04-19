@@ -1,4 +1,3 @@
-
 # api-library
 
 # Súmario
@@ -10,8 +9,8 @@
 - [Testes](#testes)
 - [Rotas](#testes)
 	- [GET `/books`](#get-books)
-    - [POST `/books`](#post-books)
-    - [GET `/books/search`](#get-bookssearch)
+   	- [POST `/books`](#post-books)
+   	- [GET `/books/search`](#get-bookssearch)
 	- [GET `/books/:id`](#get-booksid)
 	- [PUT  `/books/:id`](#put-booksid)
 	- [DELETE `/books/:id`](#delete-booksid)
@@ -58,7 +57,7 @@ Em desenvolvimento
 
 ## Rotas
 ###  GET `/books`
-Rota responsável por listar todos os produtos cadastrados na tabela `books`.
+Rota responsável por listar todos os livros cadastrados na tabela `books`.
 
 Exemplo de retorno com sucesso:
 ```json
@@ -91,14 +90,14 @@ Exemplo de retorno com sucesso:
 ```
 ---
 ###  POST `/books`
-Rota responsável por cadastrar novos produtos na tabela `books`. o `body` da requisição deve ter o seguinte formato:
+Rota responsável por cadastrar novos livros na tabela `books`. o `body` da requisição deve ter o seguinte formato:
 
 ```json
 {
-        "title": "Livro1",
-        "author": "6255a4b4ab65937a2b1f9dbf",
-        "publisher": "Editora1",
-        "numberPages": 100,
+    "title": "Livro1",
+    "author": "6255a4b4ab65937a2b1f9dbf",
+    "publisher": "Editora1",
+    "numberPages": 100,
 }
 ```
 Exemplo de retorno com sucesso:
@@ -124,7 +123,7 @@ Rota responsável por listar um livro especificado pelo `publisher` passado na r
 
 Exemplo de rota
 ```js
-/books/search?publishing=Editora1
+/books/search?publisher=Editora1
 ```
 
 Exemplo de retorno de uma `publisher` com múltiplos livros:
@@ -156,15 +155,136 @@ Exemplo de retorno de uma `publisher` com múltiplos livros:
     }
 ]
 ```
-Quando o `author` não é encontrado:
+Quando o `publisher` não é encontrado:
 ```json
   { "message": "Error - Publisher not found" }
 ```
 ---
 ###  GET `/books/:id`
-Rota responsável por listar uma venda especificada pelo `id` passado na rota.
+Rota responsável por listar um livro especificado pelo `id` passado na rota.
 
-Exemplo de retorno de uma venda com múltiplos produtos:
+Exemplo de retorno de um livro:
+```json
+   {
+        "_id": "624bccaea606da9d07e1147a",
+        "title": "Livro1",
+        "author": {
+            "_id": "6255a4b4ab65937a2b1f9dbf",
+            "name": "Autor2",
+            "nationality": "Americano"
+        },
+        "publisher": "Editora1",
+        "numberPages": 100,
+        "__v": 0
+    }
+```
+Quando o `id` do livro não é encontrado:
+```json
+  { "message": "Error - Book not found" }
+```
+---
+###  PUT `/books/:id`
+Rota responsável por atualizar os dados de uma livro específico na tabela `books`. O `id` do livro deve ser passada na rota, e o `body` da requisição deve ter o seguinte formato:
+
+```json
+{
+    "title": "Livro1",
+    "author": "6255a4b4ab65937a2b1f9dbf",
+    "publisher": "Editora1",
+    "numberPages": 100,
+}
+```
+Exemplo de retorno com sucesso:
+```json
+  { message: 'Book updated successful' }
+```
+Quando o `id` do livro não é encontrado:
+```json
+  { "message": "Error - Error on update book"}
+```
+
+#### Regras:
+- Atributo `numberPages` deve ser igual ou maior que `1`.
+- Atributo `author` deverá conter o `id` do autor .
+---
+###  DELETE `/books/:id`
+Rota responsável por remover um livro da tabela `books` com base no `id` passado na requisição.
+
+Exemplo de retorno com sucesso:
+```
+  { "message": "Book deleted succesful" }
+```
+Quando o `id` do produto a ser deletado não é encontrado:
+```json
+  { "message": "Error - Error on delete book"}
+```
+---
+###  GET `/authors`
+Rota responsável por listar todos os autores cadastrados na tabela `authors`.
+
+Exemplo de retorno com sucesso:
+```json
+ [
+    {
+        "_id": "6255a4b4ab65937a2b1f9dbf",
+        "name": "Autor1",
+        "nationality": "Americano"
+    },
+    {
+        "_id": "6259d9c6c7495a4007ae4511",
+        "name": "Autor2",
+        "nationality": "Brasileiro"
+    }
+]
+```
+---
+###  POST `/authors`
+Rota responsável por cadastrar novos autores na tabela `authors`. o `body` da requisição deve ter o seguinte formato:
+
+```json
+{
+    "name": "Autor1",
+    "nationality": "Americano"
+}
+```
+Exemplo de retorno com sucesso:
+```json
+{
+    "name": "Autor1",
+    "nationality": "Americano",
+    "_id": "625ef6a59083a0cfe9db5d2e"
+}
+```
+
+#### Regras:
+- Atributos `name` e `nationality` não podem estar vazios;
+---
+
+###  GET `/books/search`
+Rota responsável por listar um autor especificado pelo `name` passado na rota.
+
+Exemplo de rota
+```js
+/authors/search?name=Autor1
+```
+
+Exemplo de retorno de um `author`:
+```json
+   {
+        "_id": "625ef6a59083a0cfe9db5d2e",
+        "name": "Autor1",
+        "nationality": "Brasileiro"
+    }
+```
+Quando o `author` não é encontrado:
+```json
+  { "message": "Error - Author not found" }
+```
+---
+###  GET `/authors/:id`
+Rota responsável por listar um autor especificado pelo `id` passado na rota.
+
+Exemplo de retorno de um autor:
 ```json
    [
     { 
@@ -181,10 +301,39 @@ Exemplo de retorno de uma venda com múltiplos produtos:
 ```
 Quando o `id` do livro não é encontrado:
 ```json
-  { "message": "Error - Book not found" }
+  { "message": "Error - Author id not found" }
 ```
 ---
+###  PUT `/authors/:id`
+Rota responsável por atualizar os dados de um autor específico na tabela `authors`. O `id` do autor deve ser passada na rota, e o `body` da requisição deve ter o seguinte formato:
 
-# Under construction :construction:
+```json
+{
+    "name": "Autor1",
+    "nationality": "Americano"
+}
+```
+Exemplo de retorno com sucesso:
+```json
+  { "message": "Author updated succesful" }
+```
+Quando o `id` do autor não é encontrado:
+```json
+  { "message": "Error - Error on update author"}
+```
 
+#### Regras:
+- Atributos `name` e `nationality` não podem estar vazios;
+---
+###  DELETE `/authors/:id`
+Rota responsável por remover um autor da tabela `authors` com base no `id` passado na requisição.
 
+Exemplo de retorno com sucesso:
+```json
+  { "message": "Author deleted succesful" }
+```
+Quando o `id` do produto a ser deletado não é encontrado:
+```json
+  { "message": "Error - Error on delete Author"}
+```
+---
